@@ -1,6 +1,9 @@
 {% extends "template.html" %}
 {% block content %}
 	<div class="jumbo">
+		{% if message %}
+		<p>{{message}} {{user}} </p>
+		{% endif %}
 		<h2>Home</h2>
 		<br/>
 		<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut consectetur bibendum velit vel elementum. Pellentesque sed dui vel lacus accumsan volutpat. Cras non libero eu urna varius fermentum. Sed nisl nisi, auctor eget tincidunt sit amet, laoreet at ipsum. Donec sollicitudin lorem sed neque dignissim eget tempus mi facilisis. Nam ac aliquam lectus. Ut consectetur, nisl et iaculis blandit, mauris diam fringilla diam, sit amet ultrices eros lorem vel metus. Maecenas euismod purus non libero pulvinar in fringilla purus ultrices. Fusce vel egestas ipsum. Nunc ullamcorper porttitor sem vel porttitor.</p>
