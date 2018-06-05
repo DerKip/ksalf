@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request , redirect, url_for, \
-flash
+flash , session
+
 app=Flask(__name__) #setting up our WSGI app from flask
+
+app.secret_key='siri'
 
 @app.route('/')
 def home():
@@ -18,10 +21,14 @@ def login():
         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
             error = 'Invalid creadentials, please try again'
         else:
-            user=request.form['username']
-            message='logged in %s ' %user
-            return redirect(url_for('home',message=message))
+            session['logged_in']=True
+            return redirect(url_for('home'))
     return render_template('login.html',error=error)
+
+@app.route('/logout')
+def logout():
+    session.pop('logged_in',None)
+    return redirect(url_for('welcome'))
 
 
 if __name__=='__main__':
