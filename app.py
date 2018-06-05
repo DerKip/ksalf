@@ -1,11 +1,25 @@
 from flask import Flask, render_template, request , redirect, url_for, \
 flash , session
+from functools import wraps
 
 app=Flask(__name__) #setting up our WSGI app from flask
 
 app.secret_key='siri'
 
+# login required decorator
+def login_required(f):
+    @wraps(f)
+    def wrap (*args ,**kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
+        else:
+            flash('You need to login first .')
+            return redirect(url_for('login'))
+    return wrap
+# use decorator to link function to url
+
 @app.route('/')
+@login_required
 def home():
     return render_template('index.html')
 
@@ -27,6 +41,7 @@ def login():
     return render_template('login.html',error=error)
 
 @app.route('/logout')
+@login_required
 def logout():
     session.pop('logged_in',None)
     flash('logged out')
