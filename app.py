@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request , redirect, url_for, \
 flash , session
 from functools import wraps
+import sqlite3
 
 app=Flask(__name__) #setting up our WSGI app from flask
 
 app.secret_key='siri'
+app.database="sample.db"
 
 # login required decorator
 def login_required(f):
