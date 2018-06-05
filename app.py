@@ -7,7 +7,7 @@ app.secret_key='siri'
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('index.html')
 
 @app.route('/welcome')
 def welcome():
@@ -22,12 +22,14 @@ def login():
             error = 'Invalid creadentials, please try again'
         else:
             session['logged_in']=True
+            flash('logged in')
             return redirect(url_for('home'))
     return render_template('login.html',error=error)
 
 @app.route('/logout')
 def logout():
     session.pop('logged_in',None)
+    flash('logged out')
     return redirect(url_for('welcome'))
 
 
