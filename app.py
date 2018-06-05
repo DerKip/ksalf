@@ -4,7 +4,7 @@ app=Flask(__name__) #setting up our WSGI app from flask
 
 @app.route('/')
 def home():
-    return "hello, world"
+    return render_template('home.html')
 
 @app.route('/welcome')
 def welcome():
@@ -17,7 +17,7 @@ def login():
         if request.form['username'] != 'admin' or request.form['password'] != 'admin':
             error= 'Invalid creadentials, please try again'
         else:
-            return redirect(url_for('home'))
+            return redirect((url_for('home'))
     return render_template('login.html',error=error)
 
 
