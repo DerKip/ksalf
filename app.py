@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request , redirect, url_for, \
-flash , session
+flash , session , g
 from functools import wraps
 import sqlite3
 
@@ -23,7 +23,10 @@ def login_required(f):
 @app.route('/')
 @login_required
 def home():
-    return render_template('index.html')
+    g.db = connect_db()
+    cur=g.db.execute('SELECT * FROM posts')
+    posts=[dict (title=row[0],description=row[1]) for row in cur.fetchall()]
+    return render_template('index.html',posts=posts)
 
 @app.route('/welcome')
 def welcome():
@@ -49,6 +52,9 @@ def logout():
     flash('logged out')
     return redirect(url_for('welcome'))
 
+# creating  database object function 
+def connect_db():
+    return sqlite3.connect(app.database)
 
 if __name__=='__main__':
     app.run(debug=True)
